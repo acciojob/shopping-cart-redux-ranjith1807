@@ -7,17 +7,20 @@ const Wishlist = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="box-container">
-      <h2 className="section-title">My Wishlist ({wishlistItems.length})</h2>
+    <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
+      <h2>My Wishlist ({wishlistItems.length})</h2>
       
       {wishlistItems.length === 0 ? (
         <p>Your wishlist is empty.</p>
       ) : (
         <div>
           {wishlistItems.map((item) => (
-            <div key={item.id} className="list-item">
+            <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', alignItems: 'center' }}>
               <span><strong>{item.name}</strong> - ${item.price}</span>
-              <button className="btn-danger" onClick={() => dispatch(toggleWishlist(item))}>
+              <button 
+                className="btn btn-sm btn-danger"
+                onClick={() => dispatch(toggleWishlist(item))} 
+              >
                 Remove
               </button>
             </div>

@@ -5,7 +5,6 @@ import { toggleWishlist } from './features/wishlistSlice';
 import Cart from './components/Cart';
 import Wishlist from './components/Wishlist';
 
-// Added more products because the tests click up to the 4th child!
 const PRODUCTS = [
   { id: 1, name: 'Laptop', price: 999 },
   { id: 2, name: 'Smartphone', price: 599 },
@@ -20,62 +19,66 @@ const App = () => {
   const isInWishlist = (id) => wishlistItems.some((item) => item.id === id);
 
   return (
-    <div className="App">
-      {/* Cypress Error 1: Expected to find element: `.navbar-expand-lg > .text-center` */}
+    <>
+      {/* Child 1 of #root */}
       <nav className="navbar-expand-lg" style={{ backgroundColor: '#f8f9fa', padding: '15px', marginBottom: '20px' }}>
-        <h1 className="text-center" style={{ textAlign: 'center', margin: 0 }}>Redux Shopping Cart</h1>
+        <h1 className="text-center" style={{ margin: 0, textAlign: 'center' }}>Redux Shopping Cart</h1>
       </nav>
       
-      <div style={{ display: 'flex', gap: '30px', padding: '0 20px', flexWrap: 'wrap' }}>
+      {/* Child 2 of #root (This is the container Cypress is targeting) */}
+      <div className="main-container" style={{ display: 'flex', gap: '30px', padding: '0 20px', flexWrap: 'wrap' }}>
         
-        {/* Products List Container */}
-        <div style={{ flex: '2' }}>
-          <h2>Products</h2>
-          <div className="products-grid">
-            {PRODUCTS.map((product) => (
-              /* Cypress Errors 4, 5, 6, 7: Expected to find `:nth-child(x) > .custom-card > .card-body > .btn` */
-              <div key={product.id} style={{ marginBottom: '15px' }}>
+        {/* Child 1 of main-container */}
+        <div className="products-list" style={{ flex: '2', minWidth: '300px' }}>
+          
+          {/* :nth-child(1) -> The h3 Cypress is expecting */}
+          <h3>Products</h3>
+          
+          {/* :nth-child(2), :nth-child(3), etc. -> The product cards */}
+          {PRODUCTS.map((product) => (
+            <div key={product.id} className="product-wrapper">
+              
+              {/* .custom-card .card */}
+              <div className="custom-card card" style={{ border: '1px solid #ddd', marginBottom: '15px', borderRadius: '8px' }}>
                 
-                {/* Cypress Error 2 & 3: Expected `.custom-card.card` */}
-                <div className="custom-card card" style={{ border: '1px solid #ddd', borderRadius: '8px' }}>
+                {/* .card-body */}
+                <div className="card-body" style={{ padding: '15px' }}>
                   
-                  {/* Must have a .card-body inside */}
-                  <div className="card-body" style={{ padding: '15px' }}>
-                    <h3 className="card-title">{product.name}</h3>
-                    <p className="card-text">${product.price}</p>
+                  {/* Cypress Error: Expected .custom-card h4 */}
+                  <h4>{product.name}</h4>
+                  <p>${product.price}</p>
+                  
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    {/* .btn */}
+                    <button 
+                      className="btn btn-primary" 
+                      onClick={() => dispatch(addToCart(product))}
+                    >
+                      Add to Cart
+                    </button>
                     
-                    <div style={{ display: 'flex', gap: '10px' }}>
-                      {/* Cypress Error 2 & 3: Expected `button.btn-primary` */}
-                      <button 
-                        className="btn btn-primary" 
-                        onClick={() => dispatch(addToCart(product))}
-                      >
-                        Add to Cart
-                      </button>
-                      
-                      <button 
-                        className="btn btn-secondary" 
-                        onClick={() => dispatch(toggleWishlist(product))}
-                      >
-                        {isInWishlist(product.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
-                      </button>
-                    </div>
+                    <button 
+                      className="btn btn-secondary" 
+                      onClick={() => dispatch(toggleWishlist(product))}
+                    >
+                      {isInWishlist(product.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                    </button>
                   </div>
-
                 </div>
+
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
 
-        {/* Cart & Wishlist Container */}
-        <div style={{ flex: '1', minWidth: '300px' }}>
+        {/* Sidebar for Cart and Wishlist */}
+        <div className="sidebar-container" style={{ flex: '1', minWidth: '300px' }}>
           <Cart />
           <Wishlist />
         </div>
 
       </div>
-    </div>
+    </>
   );
 };
 

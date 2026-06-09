@@ -7,18 +7,18 @@ const Wishlist = () => {
   const dispatch = useDispatch();
 
   return (
-    <div>
-      <h2 style={{ marginTop: '30px' }}>Your Wishlist</h2>
+    <div style={{ border: '1px solid #ddd', padding: '15px' }}>
+      <h3>Your Wishlist</h3>
       {wishlist.length === 0 ? <p>No items saved yet.</p> : (
         wishlist.map(item => (
           <div key={item.id} className="list-item" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
             <span>{item.name}</span>
             <div>
-              <button className="btn btn-primary" onClick={() => dispatch(addToCart(item))}>
-                Add
+              <button className="btn btn-primary btn-sm" onClick={() => dispatch(addToCart(item))}>
+                Add to Cart
               </button>
-              <button className="btn btn-secondary" style={{ marginLeft: '10px' }} onClick={() => dispatch(toggleWishlist(item))}>
-                X
+              <button className="btn btn-secondary btn-sm" style={{ marginLeft: '10px' }} onClick={() => dispatch(toggleWishlist(item))}>
+                Remove
               </button>
             </div>
           </div>

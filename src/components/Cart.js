@@ -12,31 +12,31 @@ const Cart = () => {
   const finalTotal = subtotal - discountAmount;
 
   return (
-    <div>
-      <h2>Shopping Cart</h2>
+    <div style={{ marginBottom: '30px', border: '1px solid #ddd', padding: '15px' }}>
+      <h3>Shopping Cart</h3>
       {cart.length === 0 ? <p>Your cart is empty.</p> : (
         cart.map(item => (
-          <div key={item.id} className="list-item" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px' }}>
-            <span>{item.name} <br/>${item.price}</span>
+          <div key={item.id} className="list-item" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
+            <span>{item.name} (${item.price})</span>
             <div className="cart-controls">
-              {/* Added .btn classes for Cypress testing */}
-              <button className="btn btn-sm" onClick={() => dispatch(decreaseQuantity(item.id))}>-</button>
+              <button className="btn btn-sm btn-outline-dark" onClick={() => dispatch(decreaseQuantity(item.id))}>-</button>
               <span className="qty-display" style={{ margin: '0 10px', fontWeight: 'bold' }}>{item.quantity}</span>
-              <button className="btn btn-sm" onClick={() => dispatch(increaseQuantity(item.id))}>+</button>
-              <button className="btn btn-danger" style={{ marginLeft: '10px' }} onClick={() => dispatch(removeFromCart(item.id))}>X</button>
+              <button className="btn btn-sm btn-outline-dark" onClick={() => dispatch(increaseQuantity(item.id))}>+</button>
+              <button className="btn btn-danger btn-sm" style={{ marginLeft: '10px' }} onClick={() => dispatch(removeFromCart(item.id))}>X</button>
             </div>
           </div>
         ))
       )}
 
       {cart.length > 0 && (
-        <div style={{ marginTop: '20px', borderTop: '2px solid #eee', paddingTop: '15px' }}>
-          <div className="coupon-section">
+        <div style={{ marginTop: '20px' }}>
+          <div className="coupon-section" style={{ display: 'flex', gap: '10px' }}>
             <input 
               type="text" 
-              placeholder="Code" 
+              placeholder="Coupon Code" 
               value={couponCode} 
               onChange={(e) => setCouponCode(e.target.value)} 
+              style={{ flex: 1 }}
             />
             <button className="btn btn-success" onClick={() => dispatch(applyCoupon({ code: couponCode }))}>
               Apply
@@ -46,7 +46,7 @@ const Cart = () => {
           <div className="totals-box" style={{ marginTop: '15px' }}>
             <p>Subtotal: ${subtotal.toFixed(2)}</p>
             {discount > 0 && <p>Discount: -${discountAmount.toFixed(2)}</p>}
-            <h3>Total: ${finalTotal.toFixed(2)}</h3>
+            <h4>Total: ${finalTotal.toFixed(2)}</h4>
           </div>
         </div>
       )}

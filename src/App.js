@@ -9,26 +9,25 @@ import './styles/App.css';
 function App() {
   return (
     <Provider store={store}>
-      {/* Test 1 looks for this exact navbar structure */}
+      {/* 1st Child of #root: The Navbar */}
       <nav className="navbar navbar-expand-lg bg-light">
         <h2 className="text-center w-100" style={{ width: '100%', textAlign: 'center' }}>
           Shopping Cart
         </h2>
       </nav>
 
-      <div className="App" style={{ display: 'flex', gap: '30px', padding: '20px', flexWrap: 'wrap' }}>
-        <div className="products-container" style={{ flex: 2 }}>
-          <ProductList />
+      {/* 2nd Child of #root: The Main Container */}
+      <div className="App" style={{ display: 'flex', gap: '20px', padding: '20px' }}>
+        
+        {/* 1st Child of Main Container: The Products List */}
+        <ProductList />
+        
+        {/* 2nd Child of Main Container: The Sidebar (Cart/Wishlist) */}
+        <div className="sidebar" style={{ flex: 1 }}>
+          <Cart />
+          <Wishlist />
         </div>
         
-        <div className="sidebar" style={{ flex: 1 }}>
-          <div className="section-card mb-4">
-            <Cart />
-          </div>
-          <div className="section-card">
-            <Wishlist />
-          </div>
-        </div>
       </div>
     </Provider>
   );

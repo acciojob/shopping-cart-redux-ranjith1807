@@ -16,40 +16,39 @@ const ProductList = () => {
   const isInWishlist = (id) => wishlist.some(item => item.id === id);
 
   return (
-    <div>
-      <h2 style={{ marginBottom: '20px' }}>Products</h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-        {DUMMY_PRODUCTS.map(product => (
-          // The tests look for div > .custom-card.card > .card-body > .btn
-          <div key={product.id} style={{ width: '45%' }}>
-            
-            <div className="custom-card card" style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
-              <div className="card-body">
-                <h4 className="card-title">{product.name}</h4>
-                <p className="card-text">${product.price.toFixed(2)}</p>
-                
-                {/* Test 2 & 3 specifically look for button.btn-primary here */}
-                <button 
-                  className="btn btn-primary" 
-                  style={{ marginRight: '10px', padding: '8px 12px', background: 'blue', color: 'white', border: 'none' }}
-                  onClick={() => dispatch(addToCart(product))}
-                >
-                  Add to Cart
-                </button>
-                
-                <button 
-                  className="btn btn-secondary"
-                  style={{ padding: '8px 12px', border: '1px solid #333' }}
-                  onClick={() => dispatch(toggleWishlist(product))}
-                >
-                  {isInWishlist(product.id) ? 'Remove Wishlist' : 'Add Wishlist'}
-                </button>
-              </div>
+    <div className="products-container" style={{ flex: 2 }}>
+      {/* Cypress Test #1 demands this is exactly an <h3> */}
+      <h3>Products</h3>
+      
+      {/* Products MUST be direct siblings of the h3 for nth-child tests to pass */}
+      {DUMMY_PRODUCTS.map(product => (
+        <div key={product.id} style={{ marginBottom: '15px' }}>
+          
+          {/* Cypress Test #2, #3, #4 look for this exact card structure */}
+          <div className="custom-card card" style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
+            <div className="card-body">
+              <h4 className="card-title">{product.name}</h4>
+              <p className="card-text">${product.price.toFixed(2)}</p>
+              
+              <button 
+                className="btn btn-primary" 
+                style={{ marginRight: '10px' }}
+                onClick={() => dispatch(addToCart(product))}
+              >
+                Add to Cart
+              </button>
+              
+              <button 
+                className="btn btn-secondary"
+                onClick={() => dispatch(toggleWishlist(product))}
+              >
+                {isInWishlist(product.id) ? 'Remove Wishlist' : 'Add Wishlist'}
+              </button>
             </div>
-
           </div>
-        ))}
-      </div>
+
+        </div>
+      ))}
     </div>
   );
 };

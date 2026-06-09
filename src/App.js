@@ -2,32 +2,23 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import ProductList from './components/ProductList';
-import Cart from './components/Cart';
 import Wishlist from './components/Wishlist';
+import Cart from './components/Cart';
 import './styles/App.css'; 
 
 function App() {
   return (
     <Provider store={store}>
-      {/* 1st Child of #root: The Navbar */}
-      <nav className="navbar navbar-expand-lg bg-light">
-        <h2 className="text-center w-100" style={{ width: '100%', textAlign: 'center' }}>
+      <nav className="navbar navbar-expand-lg bg-light" style={{ padding: '15px 0', background: 'white', marginBottom: '20px' }}>
+        <h2 className="text-center w-100" style={{ textAlign: 'center', margin: 0, color: '#555', fontSize: '1.2rem' }}>
           Shopping Cart
         </h2>
       </nav>
 
-      {/* 2nd Child of #root: The Main Container */}
-      <div className="App" style={{ display: 'flex', gap: '20px', padding: '20px' }}>
-        
-        {/* 1st Child of Main Container: The Products List */}
+      <div className="App">
         <ProductList />
-        
-        {/* 2nd Child of Main Container: The Sidebar (Cart/Wishlist) */}
-        <div className="sidebar" style={{ flex: 1 }}>
-          <Cart />
-          <Wishlist />
-        </div>
-        
+        <Wishlist />
+        <Cart />
       </div>
     </Provider>
   );

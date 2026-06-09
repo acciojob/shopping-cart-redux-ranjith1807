@@ -1,63 +1,55 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFromCart, increaseQuantity, decreaseQuantity, applyCoupon } from '../features/cartSlice';
+import { removeFromCart, increaseQuantity, decreaseQuantity, applyCoupon } from '../redux/shopSlice';
 
 const Cart = () => {
-  const [couponCode, setCouponCode] = useState('');
-  const { cartItems, discount } = useSelector((state) => state.cart);
+  const { cart, discount } = useSelector(state => state.shop);
   const dispatch = useDispatch();
+  const [couponCode, setCouponCode] = useState('');
 
-  const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
   const discountAmount = (subtotal * discount) / 100;
-  const total = subtotal - discountAmount;
-
-  const handleApplyCoupon = () => {
-    dispatch(applyCoupon(couponCode));
-    setCouponCode('');
-  };
+  const finalTotal = subtotal - discountAmount;
 
   return (
-    <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px', marginBottom: '20px' }}>
+    <div>
       <h2>Shopping Cart</h2>
-      
-      {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        cartItems.map((item) => (
-          <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', alignItems: 'center', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
-            <span><strong>{item.name}</strong> - ${item.price}</span>
-            <div>
-              <button className="btn btn-sm btn-outline-secondary" onClick={() => dispatch(decreaseQuantity(item.id))}>-</button>
-              <span style={{ margin: '0 10px' }}>{item.quantity}</span>
-              <button className="btn btn-sm btn-outline-secondary" onClick={() => dispatch(increaseQuantity(item.id))}>+</button>
-              <button className="btn btn-sm btn-danger" style={{ marginLeft: '10px' }} onClick={() => dispatch(removeFromCart(item.id))}>
-                Remove
-              </button>
+      {cart.length === 0 ? <p className="empty-msg">Your cart is empty.</p> : (
+        cart.map(item => (
+          <div key={item.id} className="list-item">
+            <span>{item.name} <br/><small>${item.price}</small></span>
+            <div className="cart-controls">
+              <button className="qty-btn" onClick={() => dispatch(decreaseQuantity(item.id))}>-</button>
+              <span className="qty-display">{item.quantity}</span>
+              <button className="qty-btn" onClick={() => dispatch(increaseQuantity(item.id))}>+</button>
+              <button className="btn-danger" onClick={() => dispatch(removeFromCart(item.id))}>X</button>
             </div>
           </div>
         ))
       )}
 
-      {cartItems.length > 0 && (
-        <div style={{ marginTop: '20px' }}>
-          <div style={{ display: 'flex', gap: '10px' }}>
+      {cart.length > 0 && (
+        <>
+          <div className="coupon-section">
             <input 
               type="text" 
-              placeholder="Promo Code" 
+              placeholder="Code (e.g., DISCOUNT10)" 
               value={couponCode} 
               onChange={(e) => setCouponCode(e.target.value)} 
-              style={{ flex: 1, padding: '5px' }}
             />
-            <button className="btn btn-primary" onClick={handleApplyCoupon}>Apply</button>
+            <button className="btn-success" onClick={() => dispatch(applyCoupon({ code: couponCode }))}>
+              Apply
+            </button>
           </div>
-          {discount > 0 && <p style={{ color: 'green', marginTop: '5px' }}>{discount}% discount applied!</p>}
+          
+          {discount > 0 && <p className="success-msg">{discount}% discount applied!</p>}
 
-          <div style={{ marginTop: '15px', borderTop: '2px solid #eee', paddingTop: '10px' }}>
-            <p>Subtotal: ${subtotal.toFixed(2)}</p>
-            <p>Discount: -${discountAmount.toFixed(2)}</p>
-            <h3>Total: ${total.toFixed(2)}</h3>
+          <div className="totals-box">
+            <p><span>Subtotal:</span> <span>${subtotal.toFixed(2)}</span></p>
+            {discount > 0 && <p><span>Discount:</span> <span>-${discountAmount.toFixed(2)}</span></p>}
+            <h3><span>Total:</span> <span>${finalTotal.toFixed(2)}</span></h3>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

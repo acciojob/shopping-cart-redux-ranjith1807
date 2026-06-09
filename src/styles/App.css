@@ -1,146 +1,135 @@
-/* src/App.css */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f7f6;
+/* --- Global Reset --- */
+* {
+  box-sizing: border-box;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
   color: #333;
 }
 
-.app-container {
-  max-width: 1000px;
-  margin: 0 auto;
+/* --- Main Layout: Two Columns --- */
+.App {
+  display: flex;
+  max-width: 1200px;
+  margin: 40px auto;
+  gap: 30px;
+  padding: 0 20px;
+  align-items: flex-start;
+}
+
+.products-container {
+  flex: 2; /* Takes up 66% of the screen */
   background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.app-title {
+.sidebar {
+  flex: 1; /* Takes up 33% of the screen */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between Cart and Wishlist */
+}
+
+.section-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #2c3e50;
   text-align: center;
-  color: #2c3e50;
-  margin-bottom: 30px;
-  font-weight: 700;
-}
-
-.grid-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-}
-
-/* Responsiveness for smaller screens */
-@media (max-width: 768px) {
-  .grid-layout {
-    grid-template-columns: 1fr;
-  }
-}
-
-.section-title {
-  color: #2c3e50;
   border-bottom: 2px solid #eee;
   padding-bottom: 10px;
-  margin-bottom: 20px;
 }
 
-/* Product Cards */
+/* --- Product Grid Layout --- */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
 .product-card {
-  border: 1px solid #e0e0e0;
-  padding: 20px;
-  margin-bottom: 15px;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 15px;
+  text-align: center;
+  background-color: #fff;
+  transition: transform 0.2s ease-in-out;
 }
 
 .product-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transform: translateY(-5px);
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
 }
 
-.product-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.product-info h4 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.product-info p {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #007bff;
   margin-bottom: 15px;
 }
 
-.product-header h3 {
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-.product-price {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #27ae60;
-}
-
-/* Buttons */
+/* --- Buttons --- */
 button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 6px;
   cursor: pointer;
-  font-weight: 600;
-  transition: background 0.2s;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-weight: bold;
+  transition: 0.2s;
 }
 
 .btn-primary {
-  background-color: #3498db;
+  background-color: #007bff;
   color: white;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .btn-primary:hover {
-  background-color: #2980b9;
+  background-color: #0056b3;
 }
 
 .btn-secondary {
-  background-color: #f1f2f6;
-  color: #2f3542;
-  border: 1px solid #ced6e0;
+  background-color: #e2e6ea;
+  color: #333;
+  width: 100%;
 }
 
 .btn-secondary:hover {
-  background-color: #dfe4ea;
+  background-color: #dae0e5;
 }
 
 .btn-danger {
-  background-color: #e74c3c;
+  background-color: #dc3545;
   color: white;
-  padding: 6px 12px;
-  font-size: 0.9rem;
 }
 
 .btn-danger:hover {
-  background-color: #c0392b;
+  background-color: #c82333;
 }
 
-.btn-icon {
-  background-color: #ecf0f1;
-  color: #333;
-  padding: 5px 12px;
-  font-size: 1.1rem;
-  margin: 0 8px;
-}
-
-.btn-icon:hover {
-  background-color: #bdc3c7;
-}
-
-/* Cart & Wishlist Containers */
-.box-container {
-  background: #fafbfc;
-  border: 1px solid #e1e4e8;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 30px;
-}
-
+/* --- Cart & Wishlist List Items --- */
 .list-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
+  padding: 10px 0;
   border-bottom: 1px solid #eee;
 }
 
@@ -148,53 +137,79 @@ button {
   border-bottom: none;
 }
 
-.quantity-controls {
+/* --- Quantity Controls --- */
+.cart-controls {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
-/* Promo and Totals */
-.promo-section {
+.qty-btn {
+  background-color: #f1f3f5;
+  color: black;
+  border: 1px solid #ccc;
+  padding: 4px 10px;
+  font-size: 1rem;
+}
+
+.qty-btn:hover {
+  background-color: #e9ecef;
+}
+
+.qty-display {
+  font-weight: bold;
+  width: 20px;
+  text-align: center;
+}
+
+/* --- Coupons & Totals --- */
+.coupon-section {
   display: flex;
   gap: 10px;
   margin-top: 20px;
 }
 
-.promo-input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+.coupon-section input {
   flex: 1;
-  font-size: 1rem;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.success-text {
-  color: #27ae60;
-  font-weight: 600;
-  margin-top: 10px;
-  font-size: 0.9rem;
+.btn-success {
+  background-color: #28a745;
+  color: white;
 }
 
-.totals {
-  margin-top: 20px;
-  background: white;
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.totals-box {
+  background: #f8f9fa;
   padding: 15px;
-  border-radius: 8px;
+  margin-top: 15px;
+  border-radius: 5px;
   border: 1px solid #eee;
 }
 
-.total-row {
+.totals-box p {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
-  color: #555;
+  margin-bottom: 5px;
 }
 
-.total-row.final {
-  font-size: 1.3rem;
-  font-weight: bold;
-  border-top: 2px solid #eee;
-  padding-top: 12px;
-  margin-top: 12px;
-  color: #2c3e50;
+.totals-box h3 {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 2px solid #ddd;
+  color: #d9534f; /* Make total pop */
+}
+
+.empty-msg {
+  text-align: center;
+  color: #888;
+  padding: 20px 0;
 }

@@ -1,31 +1,28 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleWishlist } from '../features/wishlistSlice';
+import { toggleWishlist, addToCart } from '../redux/shopSlice';
 
 const Wishlist = () => {
-  const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
+  const wishlist = useSelector(state => state.shop.wishlist);
   const dispatch = useDispatch();
 
   return (
-    <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
-      <h2>My Wishlist ({wishlistItems.length})</h2>
-      
-      {wishlistItems.length === 0 ? (
-        <p>Your wishlist is empty.</p>
-      ) : (
-        <div>
-          {wishlistItems.map((item) => (
-            <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', alignItems: 'center' }}>
-              <span><strong>{item.name}</strong> - ${item.price}</span>
-              <button 
-                className="btn btn-sm btn-danger"
-                onClick={() => dispatch(toggleWishlist(item))} 
-              >
-                Remove
+    <div>
+      <h2>Your Wishlist</h2>
+      {wishlist.length === 0 ? <p className="empty-msg">No items saved yet.</p> : (
+        wishlist.map(item => (
+          <div key={item.id} className="list-item">
+            <span>{item.name}</span>
+            <div>
+              <button className="btn-primary" style={{ padding: '6px 10px', fontSize: '0.9rem' }} onClick={() => dispatch(addToCart(item))}>
+                🛒 Add
+              </button>
+              <button className="btn-secondary" style={{ padding: '6px 10px' }} onClick={() => dispatch(toggleWishlist(item))}>
+                ❌
               </button>
             </div>
-          ))}
-        </div>
+          </div>
+        ))
       )}
     </div>
   );

@@ -1,26 +1,24 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
 import ProductList from './components/ProductList';
-import Wishlist from './components/Wishlist';
 import Cart from './components/Cart';
-import './styles/App.css'; 
+import Wishlist from './components/Wishlist';
 
 function App() {
   return (
-    <Provider store={store}>
-      <nav className="navbar navbar-expand-lg bg-light" style={{ padding: '15px 0', background: 'white', marginBottom: '20px' }}>
-        <h2 className="text-center w-100" style={{ textAlign: 'center', margin: 0, color: '#555', fontSize: '1.2rem' }}>
-          Shopping Cart
-        </h2>
-      </nav>
-
-      <div className="App">
-        <ProductList />
-        <Wishlist />
-        <Cart />
+    <div className="container mt-4">
+      <h1 className="text-center mb-4">Shopping Cart Application</h1>
+      <div className="row">
+        {/* Products take up 8 columns (as requested by Cypress) */}
+        <div className="col-lg-8">
+          <ProductList />
+        </div>
+        {/* Sidebar takes up the remaining 4 columns */}
+        <div className="col-lg-4">
+          <Cart />
+          <Wishlist />
+        </div>
       </div>
-    </Provider>
+    </div>
   );
 }
 

@@ -16,8 +16,9 @@ function ProductList() {
     <div className="product-grid">
       {products.map((p) => (
         <div className="custom-card card" key={p.id}>
+          {/* h3 must be a direct child of custom-card */}
+          <h3>{p.name}</h3>
           <div className="card-body">
-            <h4>{p.name}</h4>
             <p>₹{p.price}</p>
 
             {/* MUST be btn-primary */}

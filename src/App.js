@@ -13,20 +13,10 @@ function App() {
         </div>
       </div>
 
-      <section>
-        <h3>Products</h3>
-        <ProductList />
-      </section>
-
-      <section>
-        <h3>Cart</h3>
-        <Cart />
-      </section>
-
-      <section>
-        <h3>Wishlist</h3>
-        <Wishlist />
-      </section>
+      {/* Grids must be direct children to satisfy the :nth-child selectors */}
+      <ProductList />
+      <Cart />
+      <Wishlist />
     </>
   );
 }

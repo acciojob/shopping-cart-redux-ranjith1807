@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   cartItems: [],
   wishlistItems: [],
-  discountPercentage: 0,
+  discount: 0, 
+  couponCode: '',
 };
 
 const cartSlice = createSlice({
@@ -42,18 +43,29 @@ const cartSlice = createSlice({
       }
     },
     applyCoupon: (state, action) => {
-      // Example: 'SAVE20' gives a 20% discount
-      if (action.payload === 'SAVE20') {
-        state.discountPercentage = 20;
+      const code = action.payload.trim().toUpperCase();
+      // Example logic: 'SAVE10' gives a 10% discount, 'SAVE20' gives 20%
+      if (code === 'SAVE10') {
+        state.discount = 10;
+        state.couponCode = code;
+      } else if (code === 'SAVE20') {
+        state.discount = 20;
+        state.couponCode = code;
       } else {
-        state.discountPercentage = 0; // Reset if invalid
+        state.discount = 0;
+        state.couponCode = '';
       }
     }
   }
 });
 
 export const { 
-  addToCart, removeFromCart, increaseQuantity, decreaseQuantity, toggleWishlist, applyCoupon 
+  addToCart, 
+  removeFromCart, 
+  increaseQuantity, 
+  decreaseQuantity, 
+  toggleWishlist, 
+  applyCoupon 
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

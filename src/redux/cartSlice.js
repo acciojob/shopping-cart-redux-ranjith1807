@@ -2,26 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   products: [
-    { id: 1, name: 'MacBook Pro 16"', price: 2499, category: 'Laptops', image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=300' },
-    { id: 2, name: 'Sony WH-1000XM5', price: 399, category: 'Audio', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300' },
-    { id: 3, name: 'iPad Air 5th Gen', price: 599, category: 'Tablets', image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=300' },
-    { id: 4, name: 'Apple Watch Series 8', price: 399, category: 'Wearables', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300' },
-    { id: 5, name: 'Logitech MX Master 3S', price: 99, category: 'Accessories', image: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=300' },
-    { id: 6, name: 'Samsung 34" Curved Monitor', price: 499, category: 'Monitors', image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=300' }
+    { id: 1, name: 'MacBook Pro 16"', price: 2499, category: 'Laptops', image: 'https://via.placeholder.com/300x200?text=MacBook+Pro' },
+    { id: 2, name: 'Sony WH-1000XM5', price: 399, category: 'Audio', image: 'https://via.placeholder.com/300x200?text=Sony+Headphones' },
+    { id: 3, name: 'iPad Air 5th Gen', price: 599, category: 'Tablets', image: 'https://via.placeholder.com/300x200?text=iPad+Air' },
+    { id: 4, name: 'Apple Watch Series 8', price: 399, category: 'Wearables', image: 'https://via.placeholder.com/300x200?text=Apple+Watch' },
+    { id: 5, name: 'Logitech MX Master 3S', price: 99, category: 'Accessories', image: 'https://via.placeholder.com/300x200?text=Logitech+Mouse' },
+    { id: 6, name: 'Samsung 34" Monitor', price: 499, category: 'Monitors', image: 'https://via.placeholder.com/300x200?text=Samsung+Monitor' }
   ],
   cart: [],
   wishlist: [],
-  coupon: {
-    code: '',
-    discountPercent: 0,
-    applied: false,
-    error: ''
-  },
-  validCoupons: {
-    'SAVE10': 10,
-    'SAVE20': 20,
-    'FLAT50': 50
-  }
+  coupon: { code: '', discountPercent: 0, applied: false, error: '' },
+  validCoupons: { 'SAVE10': 10, 'SAVE20': 20, 'FLAT50': 50 }
 };
 
 const cartSlice = createSlice({
@@ -64,12 +55,7 @@ const cartSlice = createSlice({
     applyCoupon: (state, action) => {
       const code = action.payload.trim().toUpperCase();
       if (state.validCoupons[code]) {
-        state.coupon = {
-          code,
-          discountPercent: state.validCoupons[code],
-          applied: true,
-          error: ''
-        };
+        state.coupon = { code, discountPercent: state.validCoupons[code], applied: true, error: '' };
       } else {
         state.coupon.error = 'Invalid Coupon Code! Try SAVE10, SAVE20, or FLAT50';
         state.coupon.applied = false;
@@ -82,14 +68,5 @@ const cartSlice = createSlice({
   }
 });
 
-export const { 
-  addToCart, 
-  removeFromCart, 
-  increaseQuantity, 
-  decreaseQuantity, 
-  toggleWishlist, 
-  applyCoupon,
-  removeCoupon
-} = cartSlice.actions;
-
+export const { addToCart, removeFromCart, increaseQuantity, decreaseQuantity, toggleWishlist, applyCoupon, removeCoupon } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -5,13 +5,14 @@ import Navbar from './components/Navbar';
 import ProductList from './components/ProductList';
 import Cart from './components/Cart';
 import Wishlist from './components/Wishlist';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('products');
 
   return (
     <Provider store={store}>
-      <div style={{ fontFamily: 'system-ui, -apple-system, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', margin: 0 }}>
+      <div className="min-vh-100 bg-light pb-5" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
         <main>
           {activeTab === 'products' && <ProductList />}

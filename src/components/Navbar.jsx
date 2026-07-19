@@ -6,39 +6,39 @@ export default function Navbar({ activeTab, setActiveTab }) {
   const totalCartItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <nav style={styles.navbar}>
-      <div style={styles.logo} onClick={() => setActiveTab('products')}>
-        🛍️ Redux Store
-      </div>
-      <div style={styles.navLinks}>
-        <button 
-          style={activeTab === 'products' ? styles.activeBtn : styles.btn}
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-3 mb-4 shadow">
+      <div className="text-center w-100 d-flex justify-content-between align-items-center">
+        <span 
+          className="navbar-brand fs-4 fw-bold mb-0" 
+          style={{ cursor: 'pointer', color: '#fff' }}
           onClick={() => setActiveTab('products')}
         >
-          Products
-        </button>
-        <button 
-          style={activeTab === 'wishlist' ? styles.activeBtn : styles.btn}
-          onClick={() => setActiveTab('wishlist')}
-        >
-          Wishlist <span style={styles.badge}>{wishlist.length}</span>
-        </button>
-        <button 
-          style={activeTab === 'cart' ? styles.activeBtn : styles.btn}
-          onClick={() => setActiveTab('cart')}
-        >
-          Cart <span style={styles.badge}>{totalCartItems}</span>
-        </button>
+          🛍️ Redux Shopping Store
+        </span>
+        
+        <div className="d-flex gap-3 justify-content-center">
+          <button 
+            className={`btn ${activeTab === 'products' ? 'btn-primary' : 'btn-outline-light'}`}
+            onClick={() => setActiveTab('products')}
+          >
+            Products
+          </button>
+          
+          <button 
+            className={`btn ${activeTab === 'wishlist' ? 'btn-primary' : 'btn-outline-light'}`}
+            onClick={() => setActiveTab('wishlist')}
+          >
+            Wishlist <span className="badge bg-danger ms-1">{wishlist.length}</span>
+          </button>
+          
+          <button 
+            className={`btn ${activeTab === 'cart' ? 'btn-primary' : 'btn-outline-light'}`}
+            onClick={() => setActiveTab('cart')}
+          >
+            Cart <span className="badge bg-success ms-1">{totalCartItems}</span>
+          </button>
+        </div>
       </div>
     </nav>
   );
 }
-
-const styles = {
-  navbar: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 40px', backgroundColor: '#1e293b', color: '#fff', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' },
-  logo: { fontSize: '22px', fontWeight: 'bold', cursor: 'pointer' },
-  navLinks: { display: 'flex', gap: '15px' },
-  btn: { padding: '8px 16px', background: 'transparent', border: '1px solid #475569', color: '#fff', borderRadius: '6px', cursor: 'pointer', fontSize: '15px', display: 'flex', alignItems: 'center', gap: '6px' },
-  activeBtn: { padding: '8px 16px', background: '#3b82f6', border: '1px solid #3b82f6', color: '#fff', borderRadius: '6px', cursor: 'pointer', fontSize: '15px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '6px' },
-  badge: { backgroundColor: '#ef4444', color: '#fff', padding: '2px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }
-};

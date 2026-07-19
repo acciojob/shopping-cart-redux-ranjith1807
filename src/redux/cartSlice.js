@@ -4,9 +4,11 @@ const LOCAL_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
 
 const initialState = {
   products: [
-    { id: 1, name: 'Wireless Headphones', price: 99.99, category: 'Audio', image: LOCAL_IMAGE },
-    { id: 2, name: 'Smart Watch', price: 149.99, category: 'Wearables', image: LOCAL_IMAGE },
-    { id: 3, name: 'Mechanical Keyboard', price: 89.99, category: 'Accessories', image: LOCAL_IMAGE }
+    { id: 1, name: 'Black Chino Pants', price: 6599, category: 'CHINO PANTS - BLACK', color: 'BLACK', size: 'M', image: LOCAL_IMAGE },
+    { id: 2, name: 'Navy T-Shirt', price: 1599, category: 'T-SHIRT - NAVY', color: 'NAVY', size: 'M', image: LOCAL_IMAGE },
+    { id: 3, name: 'Red Hoodie', price: 3599, category: 'HOODIE - RED', color: 'RED', size: 'M', image: LOCAL_IMAGE },
+    { id: 4, name: 'Grey Denim Jacket', price: 4999, category: 'JACKET - GREY', color: 'GREY', size: 'L', image: LOCAL_IMAGE },
+    { id: 5, name: 'White Sneakers', price: 2999, category: 'SNEAKERS - WHITE', color: 'WHITE', size: '9', image: LOCAL_IMAGE }
   ],
   cart: [],
   wishlist: [],
@@ -25,9 +27,17 @@ const cartSlice = createSlice({
       } else {
         state.cart.push({ ...action.payload, quantity: 1 });
       }
+      // Remove product from products page when added to cart
+      state.products = state.products.filter(p => p.id !== action.payload.id);
     },
     removeFromCart: (state, action) => {
-      state.cart = state.cart.filter(item => item.id !== action.payload);
+      const removedItem = state.cart.find(item => item.id === action.payload);
+      if (removedItem) {
+        state.cart = state.cart.filter(item => item.id !== action.payload);
+        // Restore product back to products page and sort by ID
+        state.products.push(removedItem);
+        state.products.sort((a, b) => a.id - b.id);
+      }
     },
     increaseQuantity: (state, action) => {
       const item = state.cart.find(item => item.id === action.payload);
@@ -40,6 +50,8 @@ const cartSlice = createSlice({
           item.quantity -= 1;
         } else {
           state.cart = state.cart.filter(i => i.id !== action.payload);
+          state.products.push(item);
+          state.products.sort((a, b) => a.id - b.id);
         }
       }
     },

@@ -8,8 +8,8 @@ export default function ProductList() {
 
   return (
     <div className="container mb-5">
+      <h2 className="text-center fw-bold mb-3">Available Products</h2>
       <div className="row g-4">
-        <h2 className="w-100 text-center fw-bold mb-3">Available Products</h2>
         {products.map((product) => {
           const isWishlisted = wishlist.some((item) => item.id === product.id);
           return (
@@ -22,7 +22,7 @@ export default function ProductList() {
                   style={{ height: '180px', objectFit: 'cover' }}
                 />
                 <div className="card-body d-flex flex-column p-3">
-                  <h5 className="card-title fs-6 mb-1">{product.name}</h5>
+                  <h4 className="card-title fs-6 mb-1">{product.name}</h4>
                   <p className="card-text fw-bold text-success fs-5 mb-3">${product.price.toFixed(2)}</p>
                   
                   <div className="mt-auto d-flex flex-column gap-2">

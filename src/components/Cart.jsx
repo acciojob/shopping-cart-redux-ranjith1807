@@ -18,9 +18,8 @@ export default function Cart() {
 
   return (
     <div className="container mb-5">
+      <h2 className="text-center fw-bold mb-3">Shopping Cart</h2>
       <div className="row g-4">
-        <h2 className="w-100 text-center fw-bold mb-3">Shopping Cart</h2>
-        
         {cart.length === 0 ? (
           <p className="w-100 text-center text-muted">Your cart is empty.</p>
         ) : (
@@ -35,7 +34,7 @@ export default function Cart() {
                       style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '6px' }}
                     />
                     <div>
-                      <h5 className="card-title mb-1 fs-6">{item.name}</h5>
+                      <h4 className="card-title mb-1 fs-6">{item.name}</h4>
                       <p className="card-text text-muted mb-0">${item.price.toFixed(2)} each</p>
                     </div>
                   </div>

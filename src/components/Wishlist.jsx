@@ -7,43 +7,55 @@ export default function Wishlist() {
   const wishlist = useSelector((state) => state.shop.wishlist);
 
   return (
-    <div className="mb-5 row g-4">
-      <h3 className="w-100 text-center fw-bold mb-3">My Wishlist</h3>
-      {wishlist.length === 0 ? (
-        <p className="w-100 text-center text-muted">No items in wishlist.</p>
-      ) : (
-        wishlist.map((item) => (
-          <div key={item.id} className="col-12 col-sm-6 col-md-4">
-            <div className="card custom-card h-100 shadow-sm border-0">
-              <img 
-                src={item.image} 
-                className="card-img-top" 
-                alt={item.name}
-                style={{ height: '180px', objectFit: 'cover' }}
-              />
-              <div className="card-body p-3">
-                <h4 className="card-title fs-6 mb-1">{item.name}</h4>
-                <p className="card-text fw-bold text-success fs-5 mb-3">Rs {item.price}</p>
-                <button 
-                  className="btn btn-primary w-100 mb-2"
-                  onClick={() => {
-                    dispatch(addToCart(item));
-                    dispatch(toggleWishlist(item));
-                  }} 
-                >
-                  Move to Cart
-                </button>
-                <button 
-                  className="btn btn-outline-danger w-100"
-                  onClick={() => dispatch(toggleWishlist(item))} 
-                >
-                  Remove
-                </button>
-              </div>
+    <div className="mb-5 pt-3 border-top">
+      <div className="mb-4">
+        <h3 className="fw-bold mb-1 text-dark">Wishlists</h3>
+        <p className="text-muted small mb-0">All Your Favorite Products</p>
+      </div>
+
+      <div className="row g-4">
+        {wishlist.length === 0 ? (
+          <div className="col-12">
+            <div className="p-4 bg-white rounded shadow-sm text-center border">
+              <p className="text-muted mb-0 small">No items in your wishlist.</p>
             </div>
           </div>
-        ))
-      )}
+        ) : (
+          wishlist.map((item) => (
+            <div key={item.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
+              <div className="card custom-card h-100 shadow-sm border-0 rounded-4 overflow-hidden bg-white">
+                <div className="p-3 bg-light text-center">
+                  <img 
+                    src={item.image} 
+                    alt={item.name}
+                    style={{ height: '160px', objectFit: 'contain', width: '100%' }}
+                  />
+                </div>
+                <div className="card-body p-3 d-flex flex-column text-start">
+                  <h4 className="card-title fs-6 fw-bold mb-1 text-dark">{item.name}</h4>
+                  <p className="text-muted small mb-2 text-uppercase" style={{ fontSize: '11px' }}>{item.category}</p>
+                  <p className="card-text fw-bold text-dark fs-6 mb-3">Rs {item.price}</p>
+                  
+                  <div className="mt-auto d-flex flex-column gap-2">
+                    <button 
+                      className="btn btn-primary w-100 py-2 fw-bold shadow-sm"
+                      onClick={() => dispatch(addToCart(item))} 
+                    >
+                      Move To Cart
+                    </button>
+                    <button 
+                      className="btn btn-light btn-sm w-100 text-danger border"
+                      onClick={() => dispatch(toggleWishlist(item))} 
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }

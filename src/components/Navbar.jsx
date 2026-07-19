@@ -6,17 +6,17 @@ export default function Navbar() {
   const totalCartItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-3 mb-4 shadow">
-      <div className="text-center w-100 d-flex justify-content-between align-items-center">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-3 mb-5 shadow-sm">
+      <div className="container d-flex justify-content-between align-items-center">
         <span className="navbar-brand fs-4 fw-bold mb-0">
           Shopping Cart
         </span>
         
-        <div className="d-flex gap-3 justify-content-center">
-          <span className="badge bg-danger fs-6 p-2">
+        <div className="d-flex gap-3">
+          <span className="badge bg-danger fs-6 p-2 px-3 rounded-pill">
             Wishlist: {wishlist.length}
           </span>
-          <span className="badge bg-success fs-6 p-2">
+          <span className="badge bg-primary fs-6 p-2 px-3 rounded-pill">
             Cart: {totalCartItems}
           </span>
         </div>

@@ -4,10 +4,10 @@ const LOCAL_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
 
 const initialState = {
   products: [
-    { id: 1, name: 'Black Chino Pants', price: 6599, category: 'CHINO PANTS - BLACK', color: 'BLACK', size: 'M', image: LOCAL_IMAGE },
-    { id: 2, name: 'Navy T-Shirt', price: 1599, category: 'T-SHIRT - NAVY', color: 'NAVY', size: 'M', image: LOCAL_IMAGE },
-    { id: 3, name: 'Red Hoodie', price: 3599, category: 'HOODIE - RED', color: 'RED', size: 'M', image: LOCAL_IMAGE },
-    { id: 4, name: 'Grey Denim Jacket', price: 4999, category: 'JACKET - GREY', color: 'GREY', size: 'L', image: LOCAL_IMAGE },
+    { id: 1, name: 'Blue Denim Shirt', price: 1799, category: 'SHIRT - BLUE', color: 'BLUE', size: 'M', image: LOCAL_IMAGE },
+    { id: 2, name: 'Red Hoodie', price: 3599, category: 'HOODIE - RED', color: 'RED', size: 'L', image: LOCAL_IMAGE },
+    { id: 3, name: 'Navy T-Shirt', price: 1599, category: 'T-SHIRT - NAVY', color: 'NAVY', size: 'M', image: LOCAL_IMAGE },
+    { id: 4, name: 'Black Chino Pants', price: 6599, category: 'CHINO PANTS - BLACK', color: 'BLACK', size: 'M', image: LOCAL_IMAGE },
     { id: 5, name: 'White Sneakers', price: 2999, category: 'SNEAKERS - WHITE', color: 'WHITE', size: '9', image: LOCAL_IMAGE }
   ],
   cart: [],
@@ -27,14 +27,16 @@ const cartSlice = createSlice({
       } else {
         state.cart.push({ ...action.payload, quantity: 1 });
       }
-      // Remove product from products page when added to cart
+      // Remove product from products section when added to cart
       state.products = state.products.filter(p => p.id !== action.payload.id);
+      // Remove from wishlist if it was present there
+      state.wishlist = state.wishlist.filter(w => w.id !== action.payload.id);
     },
     removeFromCart: (state, action) => {
       const removedItem = state.cart.find(item => item.id === action.payload);
       if (removedItem) {
         state.cart = state.cart.filter(item => item.id !== action.payload);
-        // Restore product back to products page and sort by ID
+        // Restore product back to products list and maintain ID sorting
         state.products.push(removedItem);
         state.products.sort((a, b) => a.id - b.id);
       }
@@ -63,6 +65,15 @@ const cartSlice = createSlice({
         state.wishlist.push(action.payload);
       }
     },
+    moveToWishlistFromCart: (state, action) => {
+      const item = state.cart.find(i => i.id === action.payload.id);
+      if (item) {
+        state.cart = state.cart.filter(i => i.id !== action.payload.id);
+        if (!state.wishlist.some(w => w.id === item.id)) {
+          state.wishlist.push(item);
+        }
+      }
+    },
     applyCoupon: (state, action) => {
       const code = action.payload.trim().toUpperCase();
       if (state.validCoupons[code]) {
@@ -79,5 +90,15 @@ const cartSlice = createSlice({
   }
 });
 
-export const { addToCart, removeFromCart, increaseQuantity, decreaseQuantity, toggleWishlist, applyCoupon, removeCoupon } = cartSlice.actions;
+export const { 
+  addToCart, 
+  removeFromCart, 
+  increaseQuantity, 
+  decreaseQuantity, 
+  toggleWishlist, 
+  moveToWishlistFromCart,
+  applyCoupon, 
+  removeCoupon 
+} = cartSlice.actions;
+
 export default cartSlice.reducer;

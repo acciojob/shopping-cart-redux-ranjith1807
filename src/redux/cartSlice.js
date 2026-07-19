@@ -1,13 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+// Inline SVG Data URI prevents Cypress SSL network hangs and loads in 0ms
+const LOCAL_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='100%25' height='100%25' fill='%23dee2e6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%236c757d'%3EProduct Image%3C/text%3E%3C/svg%3E";
+
 const initialState = {
   products: [
-    { id: 1, name: 'MacBook Pro 16"', price: 2499, category: 'Laptops', image: 'https://via.placeholder.com/300x200?text=MacBook+Pro' },
-    { id: 2, name: 'Sony WH-1000XM5', price: 399, category: 'Audio', image: 'https://via.placeholder.com/300x200?text=Sony+Headphones' },
-    { id: 3, name: 'iPad Air 5th Gen', price: 599, category: 'Tablets', image: 'https://via.placeholder.com/300x200?text=iPad+Air' },
-    { id: 4, name: 'Apple Watch Series 8', price: 399, category: 'Wearables', image: 'https://via.placeholder.com/300x200?text=Apple+Watch' },
-    { id: 5, name: 'Logitech MX Master 3S', price: 99, category: 'Accessories', image: 'https://via.placeholder.com/300x200?text=Logitech+Mouse' },
-    { id: 6, name: 'Samsung 34" Monitor', price: 499, category: 'Monitors', image: 'https://via.placeholder.com/300x200?text=Samsung+Monitor' }
+    { id: 1, name: 'Wireless Headphones', price: 99.99, category: 'Audio', image: LOCAL_IMAGE },
+    { id: 2, name: 'Smart Watch', price: 149.99, category: 'Wearables', image: LOCAL_IMAGE },
+    { id: 3, name: 'Mechanical Keyboard', price: 89.99, category: 'Accessories', image: LOCAL_IMAGE },
+    { id: 4, name: 'Ergonomic Mouse', price: 49.99, category: 'Accessories', image: LOCAL_IMAGE },
+    { id: 5, name: '4K HD Monitor', price: 299.99, category: 'Monitors', image: LOCAL_IMAGE },
+    { id: 6, name: 'USB-C Docking Station', price: 79.99, category: 'Accessories', image: LOCAL_IMAGE }
   ],
   cart: [],
   wishlist: [],
@@ -57,7 +60,7 @@ const cartSlice = createSlice({
       if (state.validCoupons[code]) {
         state.coupon = { code, discountPercent: state.validCoupons[code], applied: true, error: '' };
       } else {
-        state.coupon.error = 'Invalid Coupon Code! Try SAVE10, SAVE20, or FLAT50';
+        state.coupon.error = 'Invalid Coupon Code!';
         state.coupon.applied = false;
         state.coupon.discountPercent = 0;
       }

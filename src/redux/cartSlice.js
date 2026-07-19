@@ -6,10 +6,7 @@ const initialState = {
   products: [
     { id: 1, name: 'Wireless Headphones', price: 99.99, category: 'Audio', image: LOCAL_IMAGE },
     { id: 2, name: 'Smart Watch', price: 149.99, category: 'Wearables', image: LOCAL_IMAGE },
-    { id: 3, name: 'Mechanical Keyboard', price: 89.99, category: 'Accessories', image: LOCAL_IMAGE },
-    { id: 4, name: 'Ergonomic Mouse', price: 49.99, category: 'Accessories', image: LOCAL_IMAGE },
-    { id: 5, name: '4K HD Monitor', price: 299.99, category: 'Monitors', image: LOCAL_IMAGE },
-    { id: 6, name: 'USB-C Docking Station', price: 79.99, category: 'Accessories', image: LOCAL_IMAGE }
+    { id: 3, name: 'Mechanical Keyboard', price: 89.99, category: 'Accessories', image: LOCAL_IMAGE }
   ],
   cart: [],
   wishlist: [],

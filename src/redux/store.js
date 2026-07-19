@@ -1,10 +1,12 @@
-// src/redux/store.js
-import { createStore } from "redux";
-import rootReducer from "./reducers";
+import { configureStore } from '@reduxjs/toolkit';
+import cartReducer from './cartSlice';
 
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const store = configureStore({
+  reducer: {
+    shop: cartReducer,
+  },
+});
 
+// Export both named and default to prevent any import errors
+export { store };
 export default store;

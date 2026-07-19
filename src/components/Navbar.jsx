@@ -7,12 +7,13 @@ export default function Navbar() {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-3 mb-5 shadow-sm">
-      <div className="container d-flex justify-content-between align-items-center">
+      {/* Cypress requires .text-center as a direct child of .navbar-expand-lg */}
+      <div className="text-center w-100 d-flex justify-content-between align-items-center">
         <span className="navbar-brand fs-4 fw-bold mb-0">
           Shopping Cart
         </span>
         
-        <div className="d-flex gap-3">
+        <div className="d-flex gap-3 justify-content-center">
           <span className="badge bg-danger fs-6 p-2 px-3 rounded-pill">
             Wishlist: {wishlist.length}
           </span>

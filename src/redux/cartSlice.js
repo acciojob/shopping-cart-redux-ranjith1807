@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const LOCAL_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='100%25' height='100%25' fill='%23dee2e6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%236c757d'%3EProduct Image%3C/text%3E%3C/svg%3E";
+const LOCAL_IMAGE =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='100%25' height='100%25' fill='%23dee2e6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%236c757d'%3EProduct Image%3C/text%3E%3C/svg%3E";
 
 const initialState = {
   products: [
@@ -13,7 +14,7 @@ const initialState = {
   cart: [],
   wishlist: [],
   coupon: { code: '', discountPercent: 0, applied: false, error: '' },
-  validCoupons: { 'SAVE10': 10, 'SAVE20': 20, 'FLAT50': 50 }
+  validCoupons: { SAVE10: 10, SAVE20: 20, FLAT50: 50 }
 };
 
 const cartSlice = createSlice({
@@ -21,84 +22,92 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const existingItem = state.cart.find(item => item.id === action.payload.id);
+      const existingItem = state.cart.find((item) => item.id === action.payload.id);
+
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
         state.cart.push({ ...action.payload, quantity: 1 });
       }
-      // Remove product from products section when added to cart
-      state.products = state.products.filter(p => p.id !== action.payload.id);
-      // Remove from wishlist if it was present there
-      state.wishlist = state.wishlist.filter(w => w.id !== action.payload.id);
+
+      // Keep product catalog intact; only update cart
+      state.wishlist = state.wishlist.filter((w) => w.id !== action.payload.id);
     },
+
     removeFromCart: (state, action) => {
-      const removedItem = state.cart.find(item => item.id === action.payload);
-      if (removedItem) {
-        state.cart = state.cart.filter(item => item.id !== action.payload);
-        // Restore product back to products list and maintain ID sorting
-        state.products.push(removedItem);
-        state.products.sort((a, b) => a.id - b.id);
-      }
+      state.cart = state.cart.filter((item) => item.id !== action.payload);
     },
+
     increaseQuantity: (state, action) => {
-      const item = state.cart.find(item => item.id === action.payload);
+      const item = state.cart.find((item) => item.id === action.payload);
       if (item) item.quantity += 1;
     },
+
     decreaseQuantity: (state, action) => {
-      const item = state.cart.find(item => item.id === action.payload);
+      const item = state.cart.find((item) => item.id === action.payload);
       if (item) {
         if (item.quantity > 1) {
           item.quantity -= 1;
         } else {
-          state.cart = state.cart.filter(i => i.id !== action.payload);
-          state.products.push(item);
-          state.products.sort((a, b) => a.id - b.id);
+          state.cart = state.cart.filter((i) => i.id !== action.payload);
         }
       }
     },
+
     toggleWishlist: (state, action) => {
-      const index = state.wishlist.findIndex(item => item.id === action.payload.id);
+      const index = state.wishlist.findIndex((item) => item.id === action.payload.id);
+
       if (index >= 0) {
         state.wishlist.splice(index, 1);
       } else {
         state.wishlist.push(action.payload);
       }
     },
+
     moveToWishlistFromCart: (state, action) => {
-      const item = state.cart.find(i => i.id === action.payload.id);
+      const item = state.cart.find((i) => i.id === action.payload.id);
+
       if (item) {
-        state.cart = state.cart.filter(i => i.id !== action.payload.id);
-        if (!state.wishlist.some(w => w.id === item.id)) {
+        state.cart = state.cart.filter((i) => i.id !== action.payload.id);
+
+        if (!state.wishlist.some((w) => w.id === item.id)) {
           state.wishlist.push(item);
         }
       }
     },
+
     applyCoupon: (state, action) => {
       const code = action.payload.trim().toUpperCase();
+
       if (state.validCoupons[code]) {
-        state.coupon = { code, discountPercent: state.validCoupons[code], applied: true, error: '' };
+        state.coupon = {
+          code,
+          discountPercent: state.validCoupons[code],
+          applied: true,
+          error: ''
+        };
       } else {
         state.coupon.error = 'Invalid Coupon Code!';
         state.coupon.applied = false;
         state.coupon.discountPercent = 0;
       }
     },
+
     removeCoupon: (state) => {
       state.coupon = { code: '', discountPercent: 0, applied: false, error: '' };
     }
   }
 });
 
-export const { 
-  addToCart, 
-  removeFromCart, 
-  increaseQuantity, 
-  decreaseQuantity, 
-  toggleWishlist, 
+export const {
+  addToCart,
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+  toggleWishlist,
   moveToWishlistFromCart,
-  applyCoupon, 
-  removeCoupon 
+  applyCoupon,
+  removeCoupon
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -9,7 +9,7 @@ const App = () => {
     <div>
       {/* First child of app div → wrapper with h3 */}
       <div>
-        <h3>Shopping Cart</h3>
+        <h3>All Products</h3>
       </div>
 
       {/* Second child of app div → container with .row as first child */}
